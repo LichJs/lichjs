@@ -5,6 +5,13 @@ import { assert } from './'
 // when trigger beforeUnload lifecycle, these will be removed.
 const removeEvents: Array<() => void> = []
 
+/**
+ * get removeEventListener funcitons
+ *
+ * @returns removeEvents
+ */
+export const getRemoveEventListeners = () => removeEvents
+
 function storeRemoveEventListener(
   element: Element,
   eventName: string,
@@ -13,31 +20,39 @@ function storeRemoveEventListener(
   removeEvents.push(() => element.removeEventListener(eventName, event))
 }
 
-export const getRemoveEventListeners = () => removeEvents
-
-export function compileBindEvents(events: TBindEventsObject) {
+/**
+ * Travers `events` and compile to addEventListener.
+ *
+ * @param events Events object to be parsed.
+ */
+export function compileBindEvents(events: TBindEventsObject): void {
   Object.keys(events).forEach(compile => {
+    // the event name and the element that needs to be bound to the event
+    // will be parsed from the key in the `events` object in a space-separated manner.
     const spacePosition = compile.indexOf(' ')
-    // 获取待解析的事件名称
+
+    // compile event name
     const eventName = compile.substring(0, spacePosition)
-
-    // 获取待解析的元素
+    // compile selector
     const selector = compile.substring(spacePosition + 1, compile.length)
-    const formatErrorMsg = `绑定事件对象中的 key 格式有误: ${compile}, 格式参照: '[event] [selector]': [callback]`
+    const formatErrorMsg = `events \`key\` format error : ${compile}, eg: '[event] [selector]': [callback]`
 
-    // 不包含空格
+    // if not include a whitespace.
     assert(-1 !== spacePosition, formatErrorMsg)
-    // 解析后元素为空
+
+    // if compile selector is equal a empty string.
     assert(selector !== '', formatErrorMsg)
 
     /**
-     * 绑定元素事件分2种情况.
-     * 1. 如果页面初始化时元素已存在则直接可以为元素绑定事件.
-     * 2. 如果页面初始化时元素不存在则需要通过事件代理的方式来为元素绑定事件.
+     * There are two situations for binding element events.
      *
-     * -----
-     * 在绑定事件的同时, 将绑定事件的解绑事件存储至 *removeEvents* 中,
-     * 当页面触发 *beforeUnload* 生命周期钩子时 将会执行这些 removeEventListener,
+     * When page is initialized
+     * 1. if the element already exists, then directly bind events to the element.
+     * 2. if the element doesn't exist, we need to bind events to the element through event proxy.
+     *
+     * ---------
+     * while binding the event, store the unbound event function of the bound event in `removeEvents` object.
+     * when the page trigger `beforeUnload` lifecycle hooks, these removeEventListener functions will be executed.
      */
     const elements = document.querySelectorAll(selector)
 

@@ -10,8 +10,9 @@
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:jest-dom/recommended"
   ],
-  "plugins": ["jest"],
+  "plugins": ["jest", "jest-dom"],
   "rules": {}
 }

@@ -18,8 +18,6 @@ export class Lich {
         case 'complete':
           compileBindEvents(this.events)
           this.afterLoad()
-
-          console.log(getRemoveEventListeners())
           break
         default:
           break
@@ -28,8 +26,7 @@ export class Lich {
     window.addEventListener('beforeunload', () => {
       // will be deleted event listener
       getRemoveEventListeners().map(remove => remove())
-
-      // 执行页面中的beforeUnload 生命周期钩子.
+      // excute `beforeUnload` lifecycle
       this.beforeUnload()
     })
     window.addEventListener('unload', () => {
