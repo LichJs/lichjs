@@ -3,7 +3,7 @@ import { assert } from './'
 
 // store removeEventListener
 // when trigger beforeUnload lifecycle, these will be removed.
-let removeEvents: Array<() => void> = []
+const removeEvents: Array<() => void> = []
 
 function storeRemoveEventListener(
   element: Element,
