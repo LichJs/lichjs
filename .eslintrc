@@ -1,0 +1,12 @@
+{
+  "env": {
+    "jest": true
+  },
+  "parser": "@babel/eslint-parser",
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["jest"],
+  "rules": {}
+}
