@@ -26,7 +26,7 @@ export class Lich {
     window.addEventListener('beforeunload', () => {
       // will be deleted event listener
       getRemoveEventListeners().map(remove => remove())
-      // excute `beforeUnload` lifecycle
+      // execute `beforeUnload` lifecycle
       this.beforeUnload()
     })
     window.addEventListener('unload', () => {

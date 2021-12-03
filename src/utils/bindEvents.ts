@@ -6,7 +6,7 @@ import { assert } from './'
 const removeEvents: Array<() => void> = []
 
 /**
- * get removeEventListener funcitons
+ * get removeEventListener functions
  *
  * @returns removeEvents
  */
@@ -21,7 +21,7 @@ function storeRemoveEventListener(
 }
 
 /**
- * Travers `events` and compile to addEventListener.
+ * Traverse `events` and compile to addEventListener.
  *
  * @param events Events object to be parsed.
  */

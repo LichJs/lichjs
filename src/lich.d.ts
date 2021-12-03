@@ -1,7 +1,7 @@
 /**
  *
  * {
- *    "click #btn": function(event, element){
+ *    "click #btn": function(event, element) {
  *
  *    }
  * }
